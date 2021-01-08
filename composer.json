@@ -1,6 +1,6 @@
 {
-    "name": "acquia/cloud-console",
-    "description": "A package providing Acquia Cloud commands for the CommonConsole command line interface.",
+    "name": "acquia/console-helpers",
+    "description": "A package providing Helper Libraries for the CommonConsole command line interface.",
     "type": "project",
     "require": {
         "ext-json": "*",
