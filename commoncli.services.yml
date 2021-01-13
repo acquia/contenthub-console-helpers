@@ -1,6 +1,6 @@
 services:
 
   platform_command_executioner:
-    class: Acquia\Console\Helpers\Client\PlatformCommandExecutioner
+    class: Acquia\Console\Helpers\PlatformCommandExecutioner
     arguments: ['@common_console_application']
     public: true;

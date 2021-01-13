@@ -1,6 +1,6 @@
 <?php
 
-namespace Acquia\Console\Helpers\Client;
+namespace Acquia\Console\Helpers;
 
 use Acquia\Console\Helpers\Command\CommandOptionsDefinitionTrait;
 use EclipseGc\CommonConsole\PlatformInterface;
