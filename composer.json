@@ -4,7 +4,7 @@
     "type": "project",
     "require": {
         "ext-json": "*",
-        "eclipsegc/common-console": "0.0.x-dev"
+        "eclipsegc/common-console": "dev-LCH-4554"
     },
     "autoload": {
         "psr-4": {
