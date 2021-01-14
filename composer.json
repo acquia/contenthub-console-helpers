@@ -5,7 +5,7 @@
     "license": "GPL-2.0-or-later",
     "require": {
         "ext-json": "*",
-        "eclipsegc/common-console": "dev-LCH-4554",
+        "eclipsegc/common-console": "0.0.x-dev",
         "drupal/coder": "^8.3"
     },
     "autoload": {
