@@ -30,4 +30,5 @@ trait CommandOptionsDefinitionTrait {
     }
     return $definition;
   }
+
 }

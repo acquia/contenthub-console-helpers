@@ -58,7 +58,7 @@ trait PlatformCmdOutputFormatterTrait {
    * @param \Symfony\Component\Console\Output\OutputInterface $output
    *   The output to write to.
    *
-   * @return \stdClass|null
+   * @return object|null
    *   The decoded json array.
    */
   public function fromJson(string $json, OutputInterface $output): ?\stdClass {
@@ -112,7 +112,7 @@ trait PlatformCmdOutputFormatterTrait {
    * @param string $raw
    *   Raw output from remote output stream.
    *
-   * @param OutputInterface $output
+   * @param \Symfony\Component\Console\Output\OutputInterface $output
    *   Output stream.
    *
    * @param int $exit_code
@@ -124,14 +124,26 @@ trait PlatformCmdOutputFormatterTrait {
    * @param bool $print_output
    *   Whether to print the output.
    *
-   * @return object|NULL
+   * @return object|null
    *   Actual Drush command output.
    */
-  protected function getDrushOutput(string $raw, OutputInterface $output, int $exit_code, string $drush_command, bool $print_output = TRUE): ?object {
+  protected function getDrushOutput(
+        string $raw,
+        OutputInterface $output,
+        int $exit_code,
+        string $drush_command,
+        bool $print_output = TRUE
+    ): ?object {
     $result = NULL;
     $data = NULL;
     if ($exit_code > 0) {
-      $output->writeln(sprintf('<error>Error executing drush command "%s" (Exit code = %s):</error>', $drush_command, $exit_code));
+      $output->writeln(
+            sprintf(
+                '<error>Error executing drush command "%s" (Exit code = %s):</error>',
+                $drush_command,
+                $exit_code
+            )
+        );
     }
     $lines = explode(PHP_EOL, trim($raw));
     foreach ($lines as $line) {

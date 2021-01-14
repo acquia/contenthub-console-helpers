@@ -49,20 +49,22 @@ class PlatformCommandExecutioner {
    *
    * @param string $cmd_name
    *   The name of the command to execute.
-   * @param \EclipseGc\CommonConsole\PlatformInterface|NULL $platform
+   * @param \EclipseGc\CommonConsole\PlatformInterface|null $platform
    *   The platform where command needs to be executed.
    * @param array $input
    *   The input for the command.
    *
    * @return object
    *   The output of the command execution.
+   *
+   * @throws \Symfony\Component\Console\Exception\ExceptionInterface
    */
   public function runWithMemoryOutput(string $cmd_name, PlatformInterface $platform = NULL, array $input = []): object {
     /** @var \Symfony\Component\Console\Command\Command $command */
     $command = $this->getApplication()->find($cmd_name);
-    $remote_output = new StreamOutput(fopen('php://memory', 'r+', false));
+    $remote_output = new StreamOutput(fopen('php://memory', 'r+', FALSE));
     // @todo LCH-4538 added this solution for fix the highlighting
-    //  It fixes highlighting but PlatformCmdOutputFormatterTrait functions will work incorrectly
+    //   It fixes highlighting but PlatformCmdOutputFormatterTrait functions will work incorrectly
     //  $remote_output->setDecorated(TRUE);
     $input['--bare'] = NULL;
     $bind_input = new ArrayInput($input);
@@ -93,13 +95,14 @@ class PlatformCommandExecutioner {
    *   The output of the command execution.
    *
    * @throws \Exception
+   * @throws \Symfony\Component\Console\Exception\ExceptionInterface
    */
   public function runLocallyWithMemoryOutput(string $cmd_name, PlatformInterface $platform, array $input = []): object {
     /** @var \Symfony\Component\Console\Command\Command $command */
     $command = $this->getApplication()->find($cmd_name);
-    $remote_output = new StreamOutput(fopen('php://memory', 'r+', false));
+    $remote_output = new StreamOutput(fopen('php://memory', 'r+', FALSE));
     // @todo LCH-4538 added this solution for fix the highlighting
-    //  It fixes highlighting but PlatformCmdOutputFormatterTrait functions will work incorrectly
+    //   It fixes highlighting but PlatformCmdOutputFormatterTrait functions will work incorrectly
     //  $remote_output->setDecorated(TRUE);
     $bind_input = new ArrayInput($input);
     $bind_input->bind($this->getDefinitions($command));
@@ -122,18 +125,29 @@ class PlatformCommandExecutioner {
    */
   protected function formatReturnObject(int $return_code, StreamOutput $remote_output): object {
     return new class($return_code, stream_get_contents($remote_output->getStream()) ?? '') {
+
+      /**
+       * Constructor.
+       */
       public function __construct($returnCode, string $result) {
         $this->returnCode = $returnCode ?? -1;
         $this->result = $result;
       }
 
+      /**
+       * Returns the response return code.
+       */
       public function getReturnCode() {
         return $this->returnCode;
       }
 
+      /**
+       * Returns the response body.
+       */
       public function __toString() {
         return $this->result;
       }
+
     };
   }
 
