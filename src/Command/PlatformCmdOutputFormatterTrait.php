@@ -111,16 +111,12 @@ trait PlatformCmdOutputFormatterTrait {
    *
    * @param string $raw
    *   Raw output from remote output stream.
-   *
    * @param \Symfony\Component\Console\Output\OutputInterface $output
    *   Output stream.
-   *
    * @param int $exit_code
    *   Exit code from drush command.
-   *
    * @param string $drush_command
    *   Drush command executed.
-   *
    * @param bool $print_output
    *   Whether to print the output.
    *

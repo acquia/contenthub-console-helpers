@@ -122,6 +122,7 @@ class PlatformCommandExecutioner {
    *   StreamOutput after command run.
    *
    * @return object
+   *   Object containing data.
    */
   protected function formatReturnObject(int $return_code, StreamOutput $remote_output): object {
     return new class($return_code, stream_get_contents($remote_output->getStream()) ?? '') {
