@@ -1,5 +1,5 @@
 {
-    "name": "acquia/console-helpers",
+    "name": "acquia/contenthub-console-helpers",
     "description": "A package providing Helper Libraries for the CommonConsole command line interface.",
     "type": "project",
     "license": "GPL-2.0-or-later",
