@@ -9,3 +9,5 @@ Install the package with the latest version of composer:
 # Usage
 This package provides a set of Traits and services to use in your application. 
 
+- Note: this package is typically used alongside another package such as acquia/contenthub-console and not standalone
+
