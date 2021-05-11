@@ -34,7 +34,7 @@ trait PlatformGroupTrait {
    *   Platform grouping sites placeholder.
    * @param array $sites
    *   Platform sites.
-   * @param OutputInterface $output
+   * @param \Symfony\Component\Console\Output\OutputInterface $output
    *   Output stream.
    *
    * @return array
@@ -46,7 +46,7 @@ trait PlatformGroupTrait {
       $group_config = Yaml::parseFile($group_file);
     }
     catch (ParseException $exception) {
-      $output->writeln('<error>Unable to parse the YAML ' . $exception->getMessage() . '</error>', );
+      $output->writeln('<error>Unable to parse the YAML ' . $exception->getMessage() . '</error>');
       return [];
     }
 
