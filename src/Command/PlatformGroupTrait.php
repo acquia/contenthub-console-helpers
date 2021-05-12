@@ -21,7 +21,7 @@ trait PlatformGroupTrait {
    */
   protected function groupingSitesFilePath(): string {
     $alias = $this->getAlias();
-    $dir_parts = static::PLATFORM_LOCATION;
+    $dir_parts = static::GROUP_CONFIG_LOCATION;
     array_unshift($dir_parts, getenv('HOME'));
 
     return implode(DIRECTORY_SEPARATOR, $dir_parts) . "/{$alias}.yml";
@@ -62,6 +62,7 @@ trait PlatformGroupTrait {
 
     $platform_id = self::getPlatformId();
     if ($platform_id === 'Acquia Cloud Site Factory') {
+
       foreach ($sites as $key => $site) {
         if (!in_array($site['id'], $group_config[$group_name])) {
           unset($sites[$key]);
