@@ -63,7 +63,7 @@ trait PlatformGroupTrait {
     $platform_id = self::getPlatformId();
     if ($platform_id === 'Acquia Cloud Site Factory') {
       foreach ($sites as $key => $site) {
-        if (!in_array($site['id'], $group_config[$group_name])) {
+        if (!in_array($site['id'], $group_config[$group_name], TRUE)) {
           unset($sites[$key]);
         }
       }
@@ -71,7 +71,6 @@ trait PlatformGroupTrait {
     }
 
     return array_intersect_key($sites, array_flip($group_config[$group_name]));
-
   }
 
 }
