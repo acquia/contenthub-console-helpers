@@ -61,16 +61,27 @@ trait PlatformGroupTrait {
     }
 
     $platform_id = self::getPlatformId();
+    $no_valid_sites_flag = FALSE;
     if ($platform_id === 'Acquia Cloud Site Factory') {
       foreach ($sites as $key => $site) {
         if (!in_array($site['id'], $group_config[$group_name], TRUE)) {
           unset($sites[$key]);
         }
       }
-      return $sites;
+      $no_valid_sites_flag = empty($sites) ?? TRUE;
     }
 
-    return array_intersect_key($sites, array_flip($group_config[$group_name]));
+    if ($platform_id === 'Acquia Cloud') {
+      $sites = array_intersect_key($sites, array_flip($group_config[$group_name]));
+      $no_valid_sites_flag = empty($sites) ?? TRUE;
+    }
+
+    if ($no_valid_sites_flag) {
+      $output->writeln('<warning>No valid sites available in the groups. Exiting...</warning>');
+      return [];
+    }
+
+    return $sites;
   }
 
 }

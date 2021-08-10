@@ -2,5 +2,5 @@ services:
 
   platform_command_executioner:
     class: Acquia\Console\Helpers\PlatformCommandExecutioner
-    arguments: ['@common_console_application']
+    arguments: ['@common_console_application', '@console.input']
     public: true;
