@@ -2,6 +2,8 @@
 
 namespace Acquia\Console\Helpers\Command;
 
+use Acquia\Console\Acsf\Platform\ACSFPlatform;
+use Acquia\Console\Cloud\Platform\AcquiaCloudPlatform;
 use Symfony\Component\Yaml\Exception\ParseException;
 use Symfony\Component\Yaml\Yaml;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -19,9 +21,8 @@ trait PlatformGroupTrait {
    * @return string
    *   Platform group file path.
    */
-  protected function groupingSitesFilePath(): string {
-    $alias = $this->getAlias();
-    $dir_parts = static::PLATFORM_LOCATION;
+  protected function groupingSitesFilePath($alias): string {
+    $dir_parts = static::GROUP_CONFIG_LOCATION;
     array_unshift($dir_parts, getenv('HOME'));
 
     return implode(DIRECTORY_SEPARATOR, $dir_parts) . "/{$alias}.yml";
@@ -40,8 +41,8 @@ trait PlatformGroupTrait {
    * @return array
    *   Array containing filtered list of sites.
    */
-  protected function filterSitesByGroup(string $group_name, array $sites, OutputInterface $output): array {
-    $group_file = $this->groupingSitesFilePath();
+  protected function filterSitesByGroup(string $group_name, array $sites, OutputInterface $output, string $alias, string $platform_id): array {
+    $group_file = $this->groupingSitesFilePath($alias);
     try {
       $group_config = Yaml::parseFile($group_file);
     }
@@ -60,23 +61,20 @@ trait PlatformGroupTrait {
       return [];
     }
 
-    $platform_id = self::getPlatformId();
-    $no_valid_sites_flag = FALSE;
-    if ($platform_id === 'Acquia Cloud Site Factory') {
+    if ($platform_id === ACSFPlatform::PLATFORM_NAME) {
       foreach ($sites as $key => $site) {
-        if (!in_array($site['id'], $group_config[$group_name], TRUE)) {
+        $id = isset($site['id']) ? $site['id'] : $site;
+        if (!in_array($id, $group_config[$group_name], TRUE)) {
           unset($sites[$key]);
         }
       }
-      $no_valid_sites_flag = empty($sites) ?? TRUE;
     }
 
-    if ($platform_id === 'Acquia Cloud') {
+    if ($platform_id === AcquiaCloudPlatform::PLATFORM_NAME) {
       $sites = array_intersect_key($sites, array_flip($group_config[$group_name]));
-      $no_valid_sites_flag = empty($sites) ?? TRUE;
     }
 
-    if ($no_valid_sites_flag) {
+    if (empty($sites)) {
       $output->writeln('<warning>No valid sites available in the groups. Exiting...</warning>');
       return [];
     }
