@@ -63,7 +63,7 @@ trait PlatformGroupTrait {
 
     if ($platform_id === ACSFPlatform::PLATFORM_NAME) {
       foreach ($sites as $key => $site) {
-        $id = isset($site['id']) ? $site['id'] : $site;
+        $id = $site['id'] ?? $site;
         if (!in_array($id, $group_config[$group_name], TRUE)) {
           unset($sites[$key]);
         }
