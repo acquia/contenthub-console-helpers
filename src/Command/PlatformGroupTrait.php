@@ -3,6 +3,7 @@
 namespace Acquia\Console\Helpers\Command;
 
 use Acquia\Console\Acsf\Platform\ACSFPlatform;
+use Acquia\Console\Cloud\Platform\AcquiaCloudMultiSitePlatform;
 use Acquia\Console\Cloud\Platform\AcquiaCloudPlatform;
 use Symfony\Component\Yaml\Exception\ParseException;
 use Symfony\Component\Yaml\Yaml;
@@ -70,7 +71,8 @@ trait PlatformGroupTrait {
       }
     }
 
-    if ($platform_id === AcquiaCloudPlatform::PLATFORM_NAME) {
+    if ($platform_id === AcquiaCloudPlatform::PLATFORM_NAME
+      || $platform_id === AcquiaCloudMultiSitePlatform::PLATFORM_NAME) {
       $sites = array_intersect_key($sites, array_flip($group_config[$group_name]));
     }
 

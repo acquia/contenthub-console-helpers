@@ -78,9 +78,14 @@ class PlatformCommandExecutioner {
     // It fixes highlighting but PlatformCmdOutputFormatterTrait functions will work incorrectly
     // $remote_output->setDecorated(TRUE);
     $input['--bare'] = NULL;
-    if ($group = $this->input->getOption('group')) {
-      $input['--group'] = $group;
+    if ($this->input->hasOption('group') && !empty($this->input->getOption('group'))) {
+      $input['--group'] = $this->input->getOption('group');
     }
+
+    if (empty($input['--uri']) && $this->input->hasOption('uri') && !empty($this->input->getOption('uri'))) {
+      $input['--uri'] = $this->input->getOption('uri');
+    }
+
     $bind_input = new ArrayInput($input);
     $bind_input->bind($this->getDefinitions($command));
     if ($platform) {
@@ -118,9 +123,14 @@ class PlatformCommandExecutioner {
     // @todo LCH-4538 added this solution for fix the highlighting
     // It fixes highlighting but PlatformCmdOutputFormatterTrait functions will work incorrectly
     // $remote_output->setDecorated(TRUE);
-    if ($group = $this->input->getOption('group')) {
-      $input['--group'] = $group;
+    if ($this->input->hasOption('group') && !empty($this->input->getOption('group'))) {
+      $input['--group'] = $this->input->getOption('group');
     }
+
+    if (empty($input['--uri']) && $this->input->hasOption('uri') && !empty($this->input->getOption('uri'))) {
+      $input['--uri'] = $this->input->getOption('uri');
+    }
+
     $bind_input = new ArrayInput($input);
     $bind_input->bind($this->getDefinitions($command));
     $command->addPlatform($platform->getAlias(), $platform);
