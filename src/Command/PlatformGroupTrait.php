@@ -23,7 +23,10 @@ trait PlatformGroupTrait {
    *   Platform group file path.
    */
   protected function groupingSitesFilePath($alias): string {
-    $dir_parts = static::GROUP_CONFIG_LOCATION;
+    $dir_parts = [
+      '.commonconsole',
+      'groups',
+    ];
     array_unshift($dir_parts, getenv('HOME'));
 
     return implode(DIRECTORY_SEPARATOR, $dir_parts) . "/{$alias}.yml";
