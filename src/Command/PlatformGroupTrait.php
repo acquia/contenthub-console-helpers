@@ -22,7 +22,7 @@ trait PlatformGroupTrait {
    * @return string
    *   Platform group file path.
    */
-  protected function groupingSitesFilePath($alias): string {
+  protected function getGroupFilePath(string $alias): string {
     $dir_parts = [
       '.commonconsole',
       'groups',
@@ -46,7 +46,7 @@ trait PlatformGroupTrait {
    *   Array containing filtered list of sites.
    */
   protected function filterSitesByGroup(string $group_name, array $sites, OutputInterface $output, string $alias, string $platform_id): array {
-    $group_file = $this->groupingSitesFilePath($alias);
+    $group_file = $this->getGroupFilePath($alias);
     try {
       $group_config = Yaml::parseFile($group_file);
     }
@@ -56,12 +56,12 @@ trait PlatformGroupTrait {
     }
 
     if (!isset($group_config[$group_name])) {
-      $output->writeln('<error>Group name doesn\'t exists.</error>');
+      $output->writeln('<error>Group name doesn\'t exist.</error>');
       return [];
     }
 
     if (empty($group_config[$group_name])) {
-      $output->writeln('<warning>No sites available in the groups. Exiting...</warning>');
+      $output->writeln('<warning>No sites available in the group. Exiting...</warning>');
       return [];
     }
 
@@ -80,7 +80,7 @@ trait PlatformGroupTrait {
     }
 
     if (empty($sites)) {
-      $output->writeln('<warning>No valid sites available in the groups. Exiting...</warning>');
+      $output->writeln('<warning>No valid sites available in the group. Exiting...</warning>');
       return [];
     }
 
