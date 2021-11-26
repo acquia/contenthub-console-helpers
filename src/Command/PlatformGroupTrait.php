@@ -14,7 +14,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * Trait PlatformGroupTrait.
  *
- * Traits for sites filtering via group option.
+ * Perform sites filtering via group option.
  *
  * @package Acquia\Console\Helpers\Traits
  */
