@@ -21,6 +21,9 @@ trait PlatformGroupTrait {
   /**
    * Fetch the location of the platform group file.
    *
+   * @param string $alias
+   *   Platform alias.
+   *
    * @return string
    *   Platform group file path.
    */
@@ -43,6 +46,10 @@ trait PlatformGroupTrait {
    *   Platform sites.
    * @param \Symfony\Component\Console\Output\OutputInterface $output
    *   Output stream.
+   * @param string $alias
+   *   Platform alias.
+   * @param string $platform_id
+   *   Platform ID.
    *
    * @return array
    *   Array containing filtered list of sites.

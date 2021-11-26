@@ -75,7 +75,8 @@ class PlatformCommandExecutioner {
     $command = $this->getApplication()->find($cmd_name);
     $remote_output = new StreamOutput(fopen('php://memory', 'r+', FALSE));
     // @todo LCH-4538 added this solution for fix the highlighting
-    // It fixes highlighting but PlatformCmdOutputFormatterTrait functions will work incorrectly
+    // It fixes highlighting but PlatformCmdOutputFormatterTrait functions will
+    // work incorrectly
     // $remote_output->setDecorated(TRUE);
     $input['--bare'] = NULL;
     if ($this->input->hasOption('group') && !empty($this->input->getOption('group'))) {
@@ -121,7 +122,8 @@ class PlatformCommandExecutioner {
     $command = $this->getApplication()->find($cmd_name);
     $remote_output = new StreamOutput(fopen('php://memory', 'r+', FALSE));
     // @todo LCH-4538 added this solution for fix the highlighting
-    // It fixes highlighting but PlatformCmdOutputFormatterTrait functions will work incorrectly
+    // It fixes highlighting but PlatformCmdOutputFormatterTrait functions will
+    // work incorrectly
     // $remote_output->setDecorated(TRUE);
     if ($this->input->hasOption('group') && !empty($this->input->getOption('group'))) {
       $input['--group'] = $this->input->getOption('group');
