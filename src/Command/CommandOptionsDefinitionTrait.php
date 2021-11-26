@@ -7,12 +7,16 @@ use Symfony\Component\Console\Command\Command;
 /**
  * Trait CommandOptionsDefinitionTrait.
  *
+ * Merges the InputDefinition Options from the Application.
+ *
  * @package Acquia\Console\ContentHub\Command\Helpers
  */
 trait CommandOptionsDefinitionTrait {
 
   /**
-   * Merges the InputDefinition Options from the Application into the Command and returns the full Input.
+   * Merges the InputDefinition Options from the Application into the Command.
+   *
+   * And returns the full Input.
    *
    * @param \Symfony\Component\Console\Command\Command $command
    *   The command executed.

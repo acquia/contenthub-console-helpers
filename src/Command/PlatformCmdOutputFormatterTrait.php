@@ -7,6 +7,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * Trait PlatformCmdOutputFormatterTrait.
  *
+ * Prepare the command formatted output.
+ *
  * @package Acquia\Console\ContentHub\Command\Helpers
  */
 trait PlatformCmdOutputFormatterTrait {
