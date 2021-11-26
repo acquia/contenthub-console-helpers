@@ -7,8 +7,6 @@ use Symfony\Component\Console\Command\Command;
 /**
  * Trait CommandOptionsDefinitionTrait.
  *
- * Merges the InputDefinition Options from the Application.
- *
  * @package Acquia\Console\ContentHub\Command\Helpers
  */
 trait CommandOptionsDefinitionTrait {

@@ -12,8 +12,6 @@ use Symfony\Component\Console\Output\StreamOutput;
 /**
  * Class PlatformCommandExecutioner.
  *
- * Executes a command on the given platform/locally and returns the output.
- *
  * @package Acquia\Console\Helpers\Client
  */
 class PlatformCommandExecutioner {
