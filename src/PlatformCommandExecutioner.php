@@ -4,6 +4,7 @@ namespace Acquia\Console\Helpers;
 
 use Acquia\Console\Helpers\Command\CommandOptionsDefinitionTrait;
 use EclipseGc\CommonConsole\PlatformInterface;
+use EclipseGc\CommonConsole\ProcessRunner;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
@@ -79,7 +80,7 @@ class PlatformCommandExecutioner {
     // work incorrectly
     // $remote_output->setDecorated(TRUE);
     $input['--bare'] = NULL;
-    $input = $this->overrideInput($input);
+    $input = $this->extendInputWithGlobalOptions($input);
 
     $bind_input = new ArrayInput($input);
     $bind_input->bind($this->getDefinitions($command));
@@ -119,7 +120,7 @@ class PlatformCommandExecutioner {
     // It fixes highlighting but PlatformCmdOutputFormatterTrait functions will
     // work incorrectly
     // $remote_output->setDecorated(TRUE);
-    $input = $this->overrideInput($input);
+    $input = $this->extendInputWithGlobalOptions($input);
 
     $bind_input = new ArrayInput($input);
     $bind_input->bind($this->getDefinitions($command));
@@ -170,28 +171,48 @@ class PlatformCommandExecutioner {
   }
 
   /**
-   * Overrides input array if group, timeout and uri are missing.
+   * Extends input list with global options if set.
    *
    * @param array $input
-   *   The input for the command.
+   *   The input list to extend.
    *
    * @return array
-   *   Overrideen input array.
+   *   Extended input list.
    */
-  protected function overrideInput(array $input) {
+  protected function extendInputWithGlobalOptions(array $input): array {
     if ($this->input->hasOption('group') && !empty($this->input->getOption('group'))) {
       $input['--group'] = $this->input->getOption('group');
     }
 
-    if (empty($input['--timeout']) && $this->input->hasOption('timeout') && !empty($this->input->getOption('timeout'))) {
-      $input['--timeout'] = $this->input->getOption('timeout');
-    }
+    $input['--timeout'] = $this->getTimeoutOption($input);
 
     if (empty($input['--uri']) && $this->input->hasOption('uri') && !empty($this->input->getOption('uri'))) {
       $input['--uri'] = $this->input->getOption('uri');
     }
 
     return $input;
+  }
+
+  /**
+   * Returns timeout option value.
+   *
+   * If not set returns a default value.
+   *
+   * @param array $input
+   *   The input array to get already set timeout value.
+   *
+   * @return int
+   *   Timeout value.
+   */
+  protected function getTimeoutOption(array $input): int {
+    if (!empty($input['--timeout'])) {
+      return $input['--timeout'];
+    }
+
+    $timeout = $this->input->hasOption('timeout') ?
+      $this->input->getOption('timeout') : 0;
+
+    return $timeout > ProcessRunner::DEFAULT_TIMEOUT ? $timeout : ProcessRunner::DEFAULT_TIMEOUT;
   }
 
 }
