@@ -79,13 +79,7 @@ class PlatformCommandExecutioner {
     // work incorrectly
     // $remote_output->setDecorated(TRUE);
     $input['--bare'] = NULL;
-    if ($this->input->hasOption('group') && !empty($this->input->getOption('group'))) {
-      $input['--group'] = $this->input->getOption('group');
-    }
-
-    if (empty($input['--uri']) && $this->input->hasOption('uri') && !empty($this->input->getOption('uri'))) {
-      $input['--uri'] = $this->input->getOption('uri');
-    }
+    $input = $this->overrideInput($input);
 
     $bind_input = new ArrayInput($input);
     $bind_input->bind($this->getDefinitions($command));
@@ -125,13 +119,7 @@ class PlatformCommandExecutioner {
     // It fixes highlighting but PlatformCmdOutputFormatterTrait functions will
     // work incorrectly
     // $remote_output->setDecorated(TRUE);
-    if ($this->input->hasOption('group') && !empty($this->input->getOption('group'))) {
-      $input['--group'] = $this->input->getOption('group');
-    }
-
-    if (empty($input['--uri']) && $this->input->hasOption('uri') && !empty($this->input->getOption('uri'))) {
-      $input['--uri'] = $this->input->getOption('uri');
-    }
+    $input = $this->overrideInput($input);
 
     $bind_input = new ArrayInput($input);
     $bind_input->bind($this->getDefinitions($command));
@@ -179,6 +167,31 @@ class PlatformCommandExecutioner {
       }
 
     };
+  }
+
+  /**
+   * Overrides input array if group, timeout and uri are missing.
+   *
+   * @param array $input
+   *   The input for the command.
+   *
+   * @return array
+   *   Overrideen input array.
+   */
+  protected function overrideInput(array $input) {
+    if ($this->input->hasOption('group') && !empty($this->input->getOption('group'))) {
+      $input['--group'] = $this->input->getOption('group');
+    }
+
+    if (empty($input['--timeout']) && $this->input->hasOption('timeout') && !empty($this->input->getOption('timeout'))) {
+      $input['--timeout'] = $this->input->getOption('timeout');
+    }
+
+    if (empty($input['--uri']) && $this->input->hasOption('uri') && !empty($this->input->getOption('uri'))) {
+      $input['--uri'] = $this->input->getOption('uri');
+    }
+
+    return $input;
   }
 
 }
