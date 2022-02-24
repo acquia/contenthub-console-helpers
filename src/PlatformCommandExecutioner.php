@@ -209,10 +209,8 @@ class PlatformCommandExecutioner {
       return $input['--timeout'];
     }
 
-    $timeout = $this->input->hasOption('timeout') ?
-      $this->input->getOption('timeout') : 0;
-
-    return $timeout > ProcessRunner::DEFAULT_TIMEOUT ? $timeout : ProcessRunner::DEFAULT_TIMEOUT;
+    return $this->input->hasOption('timeout') ?
+      (int) $this->input->getOption('timeout') : 0;
   }
 
 }
