@@ -12,6 +12,7 @@
     ],
     "require": {
         "ext-json": "*",
+        "php": ">=7.3",
         "eclipsegc/common-console": "0.0.x-dev"
     },
     "autoload": {
