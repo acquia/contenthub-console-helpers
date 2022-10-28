@@ -28,4 +28,4 @@ jobs:
           ./vendor/bin/phpcs -n --standard=Drupal,DrupalPractice src/
 
       - name: Run phpstan
-          run: ./vendor/bin/phpstan analyse
+          run: ./vendor/bin/phpstan analyse ./
