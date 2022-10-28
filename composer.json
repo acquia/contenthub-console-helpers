@@ -12,7 +12,7 @@
     ],
     "require": {
         "ext-json": "*",
-        "eclipsegc/common-console": "0.0.x-dev"
+        "eclipsegc/common-console": "1.0.x-dev"
     },
     "autoload": {
         "psr-4": {
@@ -29,6 +29,7 @@
         "phpunit/phpunit": "^8",
         "squizlabs/php_codesniffer": "^3.5",
         "php-coveralls/php-coveralls": "^2.4",
-        "drupal/coder": "dev-8.x-3.x"
+        "drupal/coder": "dev-8.x-3.x",
+        "phpstan/phpstan": "^1.8"
     }
 }
