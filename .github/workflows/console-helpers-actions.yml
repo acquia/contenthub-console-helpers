@@ -6,7 +6,7 @@ jobs:
     strategy:
       matrix:
         os: [ ubuntu-latest ]
-        php-version: [ '8.1' ]
+        php-version: [ '7.4', '8.1' ]
     steps:
       # This step checks out a copy of your repository.
       - name: Checkout
@@ -28,4 +28,4 @@ jobs:
           ./vendor/bin/phpcs -n --standard=Drupal,DrupalPractice src/
 
       - name: Run phpstan
-        run: ./vendor/bin/phpstan analyse ./src
+        run: ./vendor/bin/phpstan analyse ./src --level=1

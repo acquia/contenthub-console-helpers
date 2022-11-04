@@ -146,6 +146,20 @@ class PlatformCommandExecutioner {
     return new class($return_code, stream_get_contents($remote_output->getStream()) ?? '') {
 
       /**
+       * The Exit code.
+       *
+       * @var int
+       */
+      protected $returnCode;
+
+      /**
+       * The result.
+       *
+       * @var string
+       */
+      protected $result;
+
+      /**
        * Constructor.
        */
       public function __construct($returnCode, string $result) {
