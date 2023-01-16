@@ -78,6 +78,39 @@ trait PlatformCmdOutputFormatterTrait {
   }
 
   /**
+   * Extracts json responses by line from the output.
+   *
+   * @param string $response
+   *   The output stream.
+   * @param bool $ignoreError
+   *   Whether to ignore the error.
+   *
+   * @return array
+   *   Returns the parsable jsons from the response in a unified array.
+   *
+   * @throws \Exception
+   */
+  public function extractAndAggregateJson(string $response, bool $ignoreError = TRUE): array {
+    $lines = explode(PHP_EOL, trim($response));
+    $json = [];
+    foreach ($lines as $line) {
+      if (empty($line)) {
+        continue;
+      }
+      $decoded = json_decode($line, TRUE);
+      if (!is_array($decoded)) {
+        continue;
+      }
+      if (!$decoded['success'] && $ignoreError === FALSE) {
+        throw new \Exception(print_r($decoded));
+      }
+
+      $json[] = $decoded['data'];
+    }
+    return $json;
+  }
+
+  /**
    * Checks if the returned client data is valid.
    *
    * @param object $client_data
@@ -131,7 +164,6 @@ trait PlatformCmdOutputFormatterTrait {
         bool $print_output = TRUE
     ): ?object {
     $result = NULL;
-    $data = NULL;
     if ($exit_code > 0) {
       $output->writeln(
             sprintf(
